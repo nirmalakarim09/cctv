@@ -5,11 +5,23 @@
 <meta charset="UTF-8">
 
 <title>Dashboard CCTV Kota Ambon</title>
+<!-- <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> -->
 
-<link rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+{{-- map --}}
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+
+<!-- <link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"> -->
 
 <link rel="stylesheet"
 href="css/style.css">
@@ -17,8 +29,9 @@ href="css/style.css">
 </head>
 
 <body>
+    console.log(Hls);
 
-<div id="map"></div>
+<!-- <div id="map"></div>
 
 <div id="videoModal" class="modal">
 
@@ -32,9 +45,84 @@ href="css/style.css">
 
     </div>
 
-</div>
+</div> -->
+<div class="container-fluid px-0">
+        <div class="row justify-content-center bg-image mx-1 mb-5" >
+            <div class="col-lg-11 py-5" id="map" >
+                {{-- <div class="bg-white p-2 my-2" > --}}
+                    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+                    <script>
+                        // koordinat (contoh: Indonesia)
+                        var map = L.map('map').setView([-3.690387, 128.186579], 13);
+
+                        // tile map
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; OpenStreetMap'
+                        }).addTo(map);
+                        
+                        //icon
+                        const cctvIcon = L.icon({
+                            iconUrl: '/images/cctv.png',
+                            iconSize: [40, 40],      // ukuran ikon
+                            iconAnchor: [20, 40],    // titik yang menempel ke koordinat
+                            popupAnchor: [0, -40]    // posisi popup
+                        });
+
+                        // marker
+                        const lokasi = [
+                        {
+                            nama: "CCTV Satpol PP",
+                            lat: -3.690387,
+                            lng: 128.186579,
+                            stream: "http://174.1.1.50:8888/cctv01/index.m3u8"
+                        },
+                        {
+                            nama: "CCTV Pelabuhan",
+                            lat: -3.692000,
+                            lng: 128.190000,
+                            stream: "https://youtu.be/ThGYCL1zERU?si=XUtrOBqUlzkMxxDS"
+                        },
+                        {
+                            nama: "CCTV Pasar",
+                            lat: -3.688500,
+                            lng: 128.184000,
+                            stream: "http://174.1.1.50:8888/cctv02/index.m3u8"
+                        }
+                    ];
+
+                    lokasi.forEach(function(item, index) {
+                        L.marker([item.lat, item.lng], {
+                            icon: cctvIcon
+                        })
+                        .addTo(map)
+                        .bindPopup(`
+                            <h5>${item.nama}</h5>
+                            <video id="video${index}" width="300" controls autoplay muted></video>
+                        `)
+                        .on('popupopen', function () {
+
+                        const video = document.getElementById(`video${index}`);
+
+                        if (Hls.isSupported()) {
+                            const hls = new Hls();
+                            hls.loadSource(item.stream);
+                            hls.attachMedia(video);
+                        } else {
+                            video.src = item.stream;
+                        }
+                        });
+                    });
+                        // jika mau pop up langsung kebuka aktifkan yang dibawa
+                        // .openPopup();
+                    </script>
+                {{-- </div> --}}
+            </div>
+        </div>
+    </div>
+
+<!-- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> -->
+ 
 
 <script src="js/cctv.js"></script>
 <script src="js/app.js"></script>
