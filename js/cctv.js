@@ -3,13 +3,13 @@ const cctvs = [
     nama:"CCTV Depan Abdullallie",
     lat:-3.6991,
     lng:128.17625,
-    stream:"http://localhost:8889/cctv01"
+    stream:"http://174.1.1.50:8889/cctv01"
 },
 {
     nama:"CCTV Depan ASABRI",
     lat:-3.70802,
     lng:128.17127,
-    stream:"http://localhost:8889/cctv02"
+    stream:"http://174.1.1.50:8889/cctv02"
 },
 {
     nama:"CCTV Depan ASMIL OSM",
